@@ -6,6 +6,7 @@ build: |
   pushd build
     cmake .. -DUSE_CUDA=OFF -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE
     make -j8
+    make install
   popd
   pushd python-package
     mkdir -p dist/lib/python2.7/site-packages
@@ -15,4 +16,3 @@ build: |
     PYTHONPATH=dist/lib/python3.5/site-packages python3 setup.py install --prefix dist
     install_python 3.5 dist/lib/python3.5/site-packages/xgboost-1.0.2-py3.5.egg/xgboost
   popd
-  install lib/* lib/
