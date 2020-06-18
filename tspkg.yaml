@@ -1,0 +1,18 @@
+name: xgboost
+version: "1.0.2"
+
+build: |
+  mkdir -p build
+  pushd build
+    cmake .. -DUSE_CUDA=OFF -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE
+    make -j8
+  popd
+  pushd python-package
+    mkdir -p dist/lib/python2.7/site-packages
+    PYTHONPATH=dist/lib/python2.7/site-packages python2 setup.py install --prefix dist
+    install_python 2.7 dist/lib/python2.7/site-packages/xgboost-1.0.2-py2.7.egg/xgboost
+    mkdir -p dist/lib/python3.5/site-packages
+    PYTHONPATH=dist/lib/python3.5/site-packages python3 setup.py install --prefix dist
+    install_python 3.5 dist/lib/python3.5/site-packages/xgboost-1.0.2-py3.5.egg/xgboost
+  popd
+  install lib/* lib/
